@@ -12,7 +12,7 @@
     "url": "https://github.com/Koniushok/link-shortener-server"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node index.js",
+    "start": "nodemon --exec babel-node ./src/index.js",
     "lint": "yarn eslint src/**",
     "build": "babel src --out-dir build"
   },
