@@ -1,9 +1,9 @@
 /* eslint-disable func-names */
 // @flow
-const mongoose = require('mongoose');
-const Joi = require('joi');
-const config = require('config');
-const jwt = require('jsonwebtoken');
+import mongoose from 'mongoose';
+import Joi from 'joi';
+import config from 'config';
+import jwt from 'jsonwebtoken';
 
 export type User = {
   loginName: string,
@@ -11,7 +11,7 @@ export type User = {
   surname: string,
   name: string,
 };
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
   loginName: {
     type: String,
     required: true,
@@ -42,7 +42,7 @@ userSchema.methods.getToken = function () {
   return token;
 };
 
-function validateUser(user: User) {
+export function validateUser(user: User) {
   const schema = {
     loginName: Joi.string()
       .min(6)
@@ -62,7 +62,4 @@ function validateUser(user: User) {
 
   return Joi.validate(user, schema);
 }
-const userModel = mongoose.model('User', userSchema);
-
-exports.User = userModel;
-exports.validate = validateUser;
+export const userModel = mongoose.model('User', userSchema);

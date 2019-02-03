@@ -1,6 +1,6 @@
 // @flow
-const mongoose = require('mongoose');
-const Joi = require('joi');
+import mongoose from 'mongoose';
+import Joi from 'joi';
 
 export type Link = {
   title: string,
@@ -8,7 +8,7 @@ export type Link = {
   description: string,
   tags: Array<string>,
 };
-const linkSchema = new mongoose.Schema({
+export const linkSchema = new mongoose.Schema({
   title: {
     type: String,
     maxlength: 100,
@@ -37,7 +37,7 @@ const linkSchema = new mongoose.Schema({
   },
 });
 
-function validateLink(link: Link) {
+export function validateLink(link: Link) {
   const schema = {
     title: Joi.string()
       .max(100)
@@ -51,7 +51,5 @@ function validateLink(link: Link) {
 
   return Joi.validate(link, schema);
 }
-const linkModel = mongoose.model('Link', linkSchema);
 
-exports.Link = linkModel;
-exports.validate = validateLink;
+export const linkModel = mongoose.model('Link', linkSchema);
