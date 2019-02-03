@@ -1,0 +1,5 @@
+{
+  "jwtKey": "Koniushok",
+  "database": "mongodb://localhost/linkShortener",
+  "port": "8080"
+}

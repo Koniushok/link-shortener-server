@@ -1,0 +1,35 @@
+{
+  "name": "link-shortener-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": {
+    "name": "Valery Koniushok",
+    "email": "Kokoniushok2000@gmail.com",
+    "url": "https://github.com/Koniushok"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Koniushok/link-shortener-server"
+  },
+  "description": "link shortening server",
+  "license": "UNLICENSED",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/Koniushok/link-shortener-server/issues",
+    "email": "koniushok2000@gmail.com"
+  },
+  "engines": {
+    "node": "10.13.0",
+    "yarn": "1.10.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0"
+  },
+  "dependencies": {
+    "config": "^3.0.1",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.9"
+  }
+}
