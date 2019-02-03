@@ -5,3 +5,5 @@ yarn-debug.log*
 yarn-error.log*
 /yarn.lock
 .vscode
+flow-typed
+build
