@@ -11,6 +11,11 @@
     "type": "git",
     "url": "https://github.com/Koniushok/link-shortener-server"
   },
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js",
+    "lint": "yarn eslint src/**",
+    "build": "babel src --out-dir build"
+  },
   "description": "link shortening server",
   "license": "UNLICENSED",
   "private": true,
@@ -34,7 +39,8 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-flowtype": "^3.2.1",
     "eslint-plugin-import": "^2.16.0",
-    "flow-bin": "^0.92.0"
+    "flow-bin": "^0.92.0",
+    "nodemon": "^1.18.9"
   },
   "dependencies": {
     "config": "^3.0.1",
