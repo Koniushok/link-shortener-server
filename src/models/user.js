@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const config = require('config');
@@ -29,7 +30,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.methods.getToken = () => {
+userSchema.methods.getToken = function () {
   const token = jwt.sign({ _id: this._id }, config.get('jwtKey'));
   return token;
 };
