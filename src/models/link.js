@@ -1,5 +1,5 @@
 // @flow
-import mongoose from 'mongoose';
+import mongoose, { type MongooseSchema, type MongooseModel } from 'mongoose';
 import Joi from 'joi';
 
 export type Link = {
@@ -8,7 +8,7 @@ export type Link = {
   description: string,
   tags: Array<string>,
 };
-export const linkSchema = new mongoose.Schema({
+export const linkSchema: MongooseSchema<any> = new mongoose.Schema({
   title: {
     type: String,
     maxlength: 100,
@@ -35,6 +35,10 @@ export const linkSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Link',
+  },
 });
 
 export function validateLink(link: Link) {
@@ -52,4 +56,4 @@ export function validateLink(link: Link) {
   return Joi.validate(link, schema);
 }
 
-export const linkModel = mongoose.model('Link', linkSchema);
+export const LinkModel: MongooseModel = mongoose.model('Link', linkSchema);
