@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 // @flow
-import mongoose from 'mongoose';
+import mongoose, { type MongooseSchema } from 'mongoose';
 import Joi from 'joi';
 import config from 'config';
 import jwt from 'jsonwebtoken';
@@ -11,7 +11,7 @@ export type User = {
   surname: string,
   name: string,
 };
-export const userSchema = new mongoose.Schema({
+export const userSchema: MongooseSchema<any> = new mongoose.Schema({
   loginName: {
     type: String,
     required: true,
@@ -62,4 +62,4 @@ export function validateUser(user: User) {
 
   return Joi.validate(user, schema);
 }
-export const userModel = mongoose.model('User', userSchema);
+export const UserModel = mongoose.model('User', userSchema);
