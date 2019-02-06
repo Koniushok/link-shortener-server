@@ -62,4 +62,21 @@ export function validateUser(user: User) {
 
   return Joi.validate(user, schema);
 }
+
+type UserAuth = { password: string, loginName: string };
+export function validateAuth(userAuth: UserAuth) {
+  const schema = {
+    loginName: Joi.string()
+      .min(6)
+      .max(100)
+      .required(),
+    password: Joi.string()
+      .min(8)
+      .max(1024)
+      .required(),
+  };
+
+  return Joi.validate(userAuth, schema);
+}
+
 export const UserModel = mongoose.model('User', userSchema);
