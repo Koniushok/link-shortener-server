@@ -1,11 +1,11 @@
 // @flow
 import express, { type $Response, type $Request } from 'express';
-import { UserModel, validateUser } from '../models/user';
+import { UserModel, validateAuth } from '../models/user';
 
 const router = express.Router();
 
 router.post('/', async (req: $Request, res: $Response) => {
-  const { error } = validateUser(req.body);
+  const { error } = validateAuth(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
