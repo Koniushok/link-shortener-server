@@ -14,7 +14,11 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch(() => console.error('Could not connect to MongoDB'));
 
-app.use(cors());
+app.use(
+  cors({
+    origin: config.get('corsOrigin'),
+  }),
+);
 app.use(express.json());
 app.use('/api/auth', auth);
 app.use('/api/user', user);
