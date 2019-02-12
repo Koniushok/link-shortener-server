@@ -5,9 +5,9 @@ import type {
 } from 'express';
 
 const delay: Middleware = (req: $Request, res: $Response, next: NextFunction) => {
-  const time = process.env.DELAY || config.get('delay');
+  const time = Number(process.env.DELAY) || config.get<Number>('delay');
   if (time) {
-    setTimeout(next, Number(time));
+    setTimeout(next, time);
   } else {
     next();
   }
