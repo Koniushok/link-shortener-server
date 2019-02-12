@@ -1,4 +1,5 @@
 /* eslint-disable func-names */
+/* eslint-disable no-param-reassign */
 // @flow
 import mongoose, { type MongooseSchema } from 'mongoose';
 import Joi from 'joi';
@@ -11,31 +12,43 @@ export type User = {
   surname: string,
   name: string,
 };
-export const userSchema: MongooseSchema<any> = new mongoose.Schema({
-  loginName: {
-    type: String,
-    required: true,
-    minlength: 6,
-    maxlength: 100,
-    unique: true,
+export const userSchema: MongooseSchema<any> = new mongoose.Schema(
+  {
+    loginName: {
+      type: String,
+      required: true,
+      minlength: 6,
+      maxlength: 100,
+      unique: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      maxlength: 50,
+    },
+    surname: {
+      type: String,
+      required: true,
+      maxlength: 50,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 8,
+      maxlength: 1024,
+    },
   },
-  name: {
-    type: String,
-    required: true,
-    maxlength: 50,
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        delete ret.password;
+      },
+    },
   },
-  surname: {
-    type: String,
-    required: true,
-    maxlength: 50,
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-    maxlength: 1024,
-  },
-});
+);
 
 userSchema.methods.getToken = function () {
   const token = jwt.sign({ _id: this._id }, config.get('jwtKey'));
