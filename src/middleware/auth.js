@@ -15,10 +15,10 @@ const auth: Middleware = (
     return res.status(401).send('No token');
   }
   try {
-    const { _id } = jwt.verify(token, config.get('jwtKey'));
+    const { _id }: { _id: string } = jwt.verify(token, config.get('jwtKey'));
     req.userId = _id;
     next();
-  } catch (ex) {
+  } catch {
     res.status(401).send('Invalid token.');
   }
 };
