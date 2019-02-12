@@ -18,8 +18,6 @@ router.post('/', async (req: $Request, res: $Response) => {
   user = new UserModel(req.body);
   await user.save();
 
-  delete user.__v;
-  delete user.password;
   res.send(user);
 });
 
