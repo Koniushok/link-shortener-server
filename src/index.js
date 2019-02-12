@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import config from 'config';
 import express from 'express';
 import cors from 'cors';
+import delay from './middleware/delay';
 import auth from './routes/auth';
 import user from './routes/user';
 import link from './routes/link';
@@ -14,6 +15,7 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch(() => console.error('Could not connect to MongoDB'));
 
+app.use(delay);
 app.use(
   cors({
     origin: config.get('corsOrigin'),
