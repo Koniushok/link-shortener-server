@@ -11,7 +11,10 @@ import link from './routes/link';
 const app = express();
 
 mongoose
-  .connect(config.get('database'))
+  .connect(config.get('database'), {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+  })
   .then(() => console.log('Connected to MongoDB'))
   .catch(() => console.error('Could not connect to MongoDB'));
 
