@@ -7,19 +7,31 @@ import auth from '../middleware/auth';
 const router = express.Router();
 
 type Request = $Request & { userId: string };
-
 router.get('/', auth, async (req: Request, res: $Response) => {
-  const links = await LinkModel.find({ user: { $ne: req.userId } });
+  let links;
+  if (req.query.tag) {
+    links = await LinkModel.find({ user: { $ne: req.userId }, tags: req.query.tag });
+  } else {
+    links = await LinkModel.find({ user: { $ne: req.userId } });
+  }
   res.send(links);
 });
 
 router.get('/my', auth, async (req: Request, res: $Response) => {
-  const links = await LinkModel.find({ user: req.userId });
+  let links;
+  if (req.query.tag) {
+    links = await LinkModel.find({ user: req.userId, tags: req.query.tag });
+  } else {
+    links = await LinkModel.find({ user: req.userId });
+  }
   res.send(links);
 });
 
 router.get('/:id', auth, async (req: Request, res: $Response) => {
   const link = await LinkModel.findById(req.params.id);
+  if (!link) {
+    return res.status(404).send('Link not found');
+  }
   res.send(link);
 });
 
@@ -42,10 +54,10 @@ router.post('/', auth, async (req: Request, res: $Response) => {
 router.put('/:id', auth, async (req: Request, res: $Response) => {
   let link = await LinkModel.findById(req.params.id);
   if (!link) {
-    res.status(404).send('Link not found');
+    return res.status(404).send('Link not found');
   }
   if (link.user.toString() !== req.userId) {
-    res.status(403).send('Not enough rights');
+    return res.status(403).send('Not enough rights');
   }
   const { error } = validateLink(req.body);
   if (error) {
@@ -58,10 +70,10 @@ router.put('/:id', auth, async (req: Request, res: $Response) => {
 router.delete('/:id', auth, async (req: Request, res: $Response) => {
   let link = await LinkModel.findById(req.params.id);
   if (!link) {
-    res.status(404).send('Link not found');
+    return res.status(404).send('Link not found');
   }
   if (link.user.toString() !== req.userId) {
-    res.status(403).send('Not enough rights');
+    return res.status(403).send('Not enough rights');
   }
   link = await LinkModel.findByIdAndDelete(req.params.id);
   res.send(link);
