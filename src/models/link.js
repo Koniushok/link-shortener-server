@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable no-param-reassign */
-import mongoose, { type MongooseSchema, type MongooseModel } from 'mongoose';
+import mongoose, { type MongooseSchema } from 'mongoose';
 import Joi from 'joi';
 
 export type Link = {
@@ -25,7 +25,7 @@ export const linkSchema: MongooseSchema<any> = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    passage: {
+    clicks: {
       type: Number,
       default: 0,
     },
@@ -69,4 +69,4 @@ export function validateLink(link: Link) {
   return Joi.validate(link, schema);
 }
 
-export const LinkModel: MongooseModel = mongoose.model('Link', linkSchema);
+export const LinkModel = mongoose.model('Link', linkSchema);
