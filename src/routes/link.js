@@ -7,27 +7,53 @@ import auth from '../middleware/auth';
 const router = express.Router();
 
 type Request = $Request & { userId: string };
-router.get('/', auth, async (req: Request, res: $Response) => {
+router.get('/', async (req: $Request, res: $Response) => {
   let links;
-  if (req.query.tag) {
-    links = await LinkModel.find({ user: { $ne: req.userId }, tags: req.query.tag });
-  } else {
-    links = await LinkModel.find({ user: { $ne: req.userId } });
+  let linkCount;
+  const page = Number(req.query.page);
+  const items = Number(req.query.items);
+  if (!page || !items) {
+    return res.status(400).send('Bad queryString');
   }
-  res.send(links);
+  if (req.query.tag) {
+    links = await LinkModel.find({ tags: req.query.tag })
+      .skip((page - 1) * items)
+      .limit(items);
+    linkCount = await LinkModel.count({ tags: req.query.tag });
+  } else {
+    links = await LinkModel.find()
+      .skip((page - 1) * items)
+      .limit(items);
+    linkCount = await LinkModel.count();
+  }
+
+  res.send({ links, linkCount });
 });
 
 router.get('/my', auth, async (req: Request, res: $Response) => {
   let links;
-  if (req.query.tag) {
-    links = await LinkModel.find({ user: req.userId, tags: req.query.tag });
-  } else {
-    links = await LinkModel.find({ user: req.userId });
+  let linkCount;
+  const page = Number(req.query.page);
+  const items = Number(req.query.items);
+  if (!page || !items) {
+    return res.status(400).send('Bad queryString');
   }
-  res.send(links);
+  if (req.query.tag) {
+    links = await LinkModel.find({ user: req.userId, tags: req.query.tag })
+      .skip((page - 1) * items)
+      .limit(items);
+    linkCount = await LinkModel.count({ user: req.userId, tags: req.query.tag });
+  } else {
+    links = await LinkModel.find({ user: req.userId })
+      .skip((page - 1) * items)
+      .limit(items);
+    linkCount = await LinkModel.count({ user: req.userId });
+  }
+
+  res.send({ links, linkCount });
 });
 
-router.get('/:id', auth, async (req: Request, res: $Response) => {
+router.get('/:id', async (req: $Request, res: $Response) => {
   const link = await LinkModel.findById(req.params.id);
   if (!link) {
     return res.status(404).send('Link not found');
