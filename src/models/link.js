@@ -1,5 +1,6 @@
 // @flow
-import mongoose from 'mongoose';
+/* eslint-disable no-param-reassign */
+import mongoose, { type MongooseSchema } from 'mongoose';
 import Joi from 'joi';
 
 export type Link = {
@@ -8,34 +9,50 @@ export type Link = {
   description: string,
   tags: Array<string>,
 };
-export const linkSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    maxlength: 100,
-    required: true,
+export const linkSchema: MongooseSchema<any> = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      maxlength: 100,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+    shortLink: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    clicks: {
+      type: Number,
+      default: 0,
+    },
+    tags: {
+      type: [String],
+      default: [],
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Link',
+    },
   },
-  url: {
-    type: String,
-    required: true,
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        delete ret.user;
+      },
+    },
   },
-  shortLink: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  passage: {
-    type: Number,
-    default: 0,
-  },
-  tags: {
-    type: [String],
-    default: [],
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-});
+);
 
 export function validateLink(link: Link) {
   const schema = {
@@ -52,4 +69,4 @@ export function validateLink(link: Link) {
   return Joi.validate(link, schema);
 }
 
-export const linkModel = mongoose.model('Link', linkSchema);
+export const LinkModel = mongoose.model('Link', linkSchema);

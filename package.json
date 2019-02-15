@@ -12,7 +12,7 @@
     "url": "https://github.com/Koniushok/link-shortener-server"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node index.js",
+    "start": "nodemon --exec babel-node ./src/index.js",
     "lint": "yarn eslint src/**",
     "build": "babel src --out-dir build"
   },
@@ -44,8 +44,11 @@
   },
   "dependencies": {
     "config": "^3.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.4.0",
-    "mongoose": "^5.4.9"
+    "mongoose": "^5.4.9",
+    "shortid": "^2.2.14"
   }
 }

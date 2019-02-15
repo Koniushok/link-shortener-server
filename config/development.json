@@ -1,5 +1,7 @@
 {
   "jwtKey": "Koniushok",
   "database": "mongodb://localhost/linkShortener",
-  "port": "8080"
+  "port": "8080",
+  "corsOrigin":"http://localhost:3000",
+  "delay": 100
 }

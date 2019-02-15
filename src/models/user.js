@@ -1,6 +1,7 @@
 /* eslint-disable func-names */
+/* eslint-disable no-param-reassign */
 // @flow
-import mongoose from 'mongoose';
+import mongoose, { type MongooseSchema } from 'mongoose';
 import Joi from 'joi';
 import config from 'config';
 import jwt from 'jsonwebtoken';
@@ -11,31 +12,49 @@ export type User = {
   surname: string,
   name: string,
 };
-export const userSchema = new mongoose.Schema({
-  loginName: {
-    type: String,
-    required: true,
-    minlength: 6,
-    maxlength: 100,
-    unique: true,
+export const userSchema: MongooseSchema<any> = new mongoose.Schema(
+  {
+    loginName: {
+      type: String,
+      required: true,
+      minlength: 6,
+      maxlength: 100,
+      unique: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      maxlength: 50,
+    },
+    surname: {
+      type: String,
+      required: true,
+      maxlength: 50,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 8,
+      maxlength: 1024,
+    },
   },
-  name: {
-    type: String,
-    required: true,
-    maxlength: 50,
+  {
+    toJSON: {
+      transform(doc, ret) {
+        delete ret._id;
+        delete ret.__v;
+        delete ret.password;
+      },
+    },
+    toObject: {
+      transform(doc, ret) {
+        delete ret._id;
+        delete ret.__v;
+        delete ret.password;
+      },
+    },
   },
-  surname: {
-    type: String,
-    required: true,
-    maxlength: 50,
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-    maxlength: 1024,
-  },
-});
+);
 
 userSchema.methods.getToken = function () {
   const token = jwt.sign({ _id: this._id }, config.get('jwtKey'));
@@ -62,4 +81,21 @@ export function validateUser(user: User) {
 
   return Joi.validate(user, schema);
 }
-export const userModel = mongoose.model('User', userSchema);
+
+type UserAuth = { password: string, loginName: string };
+export function validateAuth(userAuth: UserAuth) {
+  const schema = {
+    loginName: Joi.string()
+      .min(6)
+      .max(100)
+      .required(),
+    password: Joi.string()
+      .min(8)
+      .max(1024)
+      .required(),
+  };
+
+  return Joi.validate(userAuth, schema);
+}
+
+export const UserModel = mongoose.model('User', userSchema);
