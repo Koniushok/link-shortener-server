@@ -14,6 +14,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node ./src/index.js",
     "lint": "yarn eslint src/**",
+    "seed": "babel-node ./src/seed.js",
     "build": "babel src --out-dir build"
   },
   "description": "link shortening server",
