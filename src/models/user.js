@@ -41,7 +41,13 @@ export const userSchema: MongooseSchema<any> = new mongoose.Schema(
   {
     toJSON: {
       transform(doc, ret) {
-        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        delete ret.password;
+      },
+    },
+    toObject: {
+      transform(doc, ret) {
         delete ret._id;
         delete ret.__v;
         delete ret.password;
