@@ -52,7 +52,7 @@ router.get('/me', auth, async (req: $Request & { userId: string }, res: $Respons
   if (!doc.length) {
     doc[0] = { totalClinks: 10, linkCount: 10 };
   }
-  logger.error(`Get user (id: ${req.userId})`, { user: user.toObject(), ...doc[0] });
+  logger.info(`Get user (id: ${req.userId})`, { user: user.toObject(), ...doc[0] });
   res.send({ ...user.toObject(), ...doc[0] });
 });
 
