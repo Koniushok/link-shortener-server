@@ -4,6 +4,7 @@ import config from 'config';
 import type {
   Middleware, NextFunction, $Response, $Request,
 } from 'express';
+import logger from '../logger';
 
 const auth: Middleware = (
   req: $Request & { userId: string },
@@ -12,6 +13,7 @@ const auth: Middleware = (
 ) => {
   const token = req.header('token');
   if (!token) {
+    logger.error('[auth Middleware] No token.');
     return res.status(401).send('No token');
   }
   try {
@@ -19,6 +21,7 @@ const auth: Middleware = (
     req.userId = _id;
     next();
   } catch {
+    logger.error(`[auth Middleware] Invalid token( token: ${token} )`);
     res.status(401).send('Invalid token.');
   }
 };
