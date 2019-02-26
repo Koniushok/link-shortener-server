@@ -29,6 +29,7 @@ export const linkSchema: MongooseSchema<any> = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    tag: Number,
     tags: {
       type: [String],
       default: [],
@@ -47,6 +48,7 @@ export const linkSchema: MongooseSchema<any> = new mongoose.Schema(
       transform(doc, ret) {
         ret.id = ret._id;
         delete ret._id;
+        delete ret.tag;
         delete ret.__v;
         delete ret.user;
       },

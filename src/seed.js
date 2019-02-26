@@ -369,7 +369,12 @@ const links = [
 
 async function createLinks() {
   const user = new mongoose.Types.ObjectId();
-  const data = links.map(linkData => ({ ...linkData, user, shortLink: shortid.generate() }));
+  const data = links.map(linkData => ({
+    ...linkData,
+    user,
+    shortLink: shortid.generate(),
+    tag: linkData.tags.length,
+  }));
   await LinkModel.insertMany(data);
   mongoose.disconnect();
 }

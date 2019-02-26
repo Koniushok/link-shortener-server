@@ -17,11 +17,12 @@ router.get('/', async (req: $Request, res: $Response) => {
   }
 
   const links = await LinkModel.find(req.query.tag && { tags: req.query.tag })
+    .sort(String(req.query.sort))
     .skip((page - 1) * items)
     .limit(items);
 
   const linkCount = await LinkModel.count(req.query.tag && { tags: req.query.tag });
-  logger.info(`Get links(page:${page}, items:${items},tag:${String(req.query.tag)})`, {
+  logger.info(`Get links(page:${page}, items:${items}, query: ${String(req.query.tag)}, sort: ${String(req.query.sort)})`, {
     query: req.query,
   });
   res.send({ links, linkCount });
@@ -38,13 +39,14 @@ router.get('/my', auth, async (req: Request, res: $Response) => {
   const links = await LinkModel.find(
     req.query.tag ? { tags: req.query.tag, user: req.userId } : { user: req.userId },
   )
+    .sort(String(req.query.sort))
     .skip((page - 1) * items)
     .limit(items);
 
   const linkCount = await LinkModel.count(
     req.query.tag ? { tags: req.query.tag, user: req.userId } : { user: req.userId },
   );
-  logger.info(`Get my links(page:${page}, items:${items},tag:${String(req.query.tag)})`, {
+  logger.info(`Get my links(page:${page}, items:${items}, tag: ${String(req.query.tag)}, sort: ${String(req.query.sort)})`, {
     query: req.query,
   });
   res.send({ links, linkCount });
@@ -67,6 +69,7 @@ router.post('/', auth, async (req: Request, res: $Response) => {
     return res.status(400).send(error.details[0].message);
   }
   req.body.user = req.userId;
+  req.body.tag = req.body.tags.length;
   req.body.shortLink = shortid.generate();
   const checkLink = await LinkModel.findOne({ shortLink: req.body.shortLink });
   if (checkLink) {
@@ -94,6 +97,7 @@ router.put('/:id', auth, async (req: Request, res: $Response) => {
     logger.error('Failed validateLink', { body: req.body });
     return res.status(400).send(error.details[0].message);
   }
+  req.body.tag = req.body.tags.length;
   link = await LinkModel.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
   logger.info('Link update', { link: link.toObject() });
   res.send(link);
