@@ -142,10 +142,56 @@
       }
     }
   },
+  "linkPost": {
+    "tags": ["link"],
+    "description": "",
+    "summary": "Add a new link to the store",
+    "security": [{ "APIKeyHeader": [] }],
+    "parameters": [
+      {
+        "in": "body",
+        "name": "body",
+        "required": true,
+        "schema": {
+          "$ref": "schemas.json#/linkCreate"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful operation",
+        "schema": {
+          "$ref": "schemas.json#/link"
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "401": {
+        "description": "Invalid token or No token",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      }
+    }
+  },
   "linkPut": {
     "tags": ["link"],
-    "description": "Update an existing link",
+    "description": "",
     "summary": "Update an existing link",
+    "security": [{ "APIKeyHeader": [] }],
     "parameters": [
       {
         "in": "path",
@@ -179,6 +225,78 @@
       },
       "401": {
         "description": "Invalid token or No token",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "403": {
+        "description": "Not enough rights",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "404": {
+        "description": "Link not found",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "linkDelete": {
+    "tags": ["link"],
+    "description": "",
+    "summary": "Deletes a link",
+    "security": [{ "APIKeyHeader": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "description": "ID of link to update",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful operation",
+        "schema": {
+          "$ref": "schemas.json#/link"
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "401": {
+        "description": "Invalid token or No token",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "403": {
+        "description": "Not enough rights",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "404": {
+        "description": "Link not found",
         "schema": {
           "description": "message",
           "type": "string"

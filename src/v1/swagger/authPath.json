@@ -20,12 +20,12 @@
     "200": {
       "description": "Successful operation. Get token",
       "schema": {
-        "description":"message",
+        "description":"token",
         "type": "string"
       }
     },
     "400": {
-      "description": "Bad queryString",
+      "description": "Bad request",
       "schema": {
         "description":"message",
         "type": "string"

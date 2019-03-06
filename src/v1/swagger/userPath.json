@@ -1,0 +1,68 @@
+{
+  "userPost": {
+    "tags": ["user"],
+    "description": "",
+    "summary": "Create user",
+    "parameters": [
+      {
+        "in": "body",
+        "name": "body",
+        "required": true,
+        "schema": {
+          "$ref": "schemas.json#/user"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful operation. Get token",
+        "schema": {
+          "description": "token",
+          "type": "string"
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "getMe": {
+    "tags": ["user"],
+    "description": "",
+    "summary": "Get user profile",
+    "security": [{ "APIKeyHeader": [] }],
+    "responses": {
+      "200": {
+        "description": "Successful operation",
+        "schema": {
+          "$ref": "schemas.json#/profile"
+        }
+      },
+      "401": {
+        "description": "Invalid token or No token or User has been deleted",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

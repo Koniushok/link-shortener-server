@@ -14,10 +14,16 @@
       "name": "token"
     }
   },
+  "definitions": {
+    "$ref": "schemas.json"
+  },
   "paths": {
     "/link": {
       "get": {
         "$ref": "linkPaths.json#/allLinkGet"
+      },
+      "post": {
+        "$ref": "linkPaths.json#/linkPost"
       }
     },
     "/link/my": {
@@ -31,11 +37,24 @@
       },
       "put": {
         "$ref": "linkPaths.json#/linkPut"
+      },
+      "delete": {
+        "$ref": "linkPaths.json#/linkDelete"
       }
     },
     "/auth": {
       "post": {
         "$ref": "authPath.json"
+      }
+    },
+    "/user": {
+      "post": {
+        "$ref": "userPath.json#/userPost"
+      }
+    },
+    "/user/me": {
+      "get": {
+        "$ref": "userPath.json#/getMe"
       }
     }
   }

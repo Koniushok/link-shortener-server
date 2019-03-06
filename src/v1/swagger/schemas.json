@@ -29,5 +29,24 @@
       },
       "description": { "type": "string" }
     }
+  },
+  "user": {
+    "type": "object",
+    "properties": {
+      "loginName": { "type": "string" },
+      "name": { "type": "string" },
+      "surname": { "type": "string" },
+      "password": { "type": "string" }
+    }
+  },
+  "profile":{
+    "type": "object",
+    "properties": {
+      "totalClinks": { "type": "integer" },
+      "linkCount": { "type": "integer" },
+      "loginName": { "type": "string" },
+      "name": { "type": "string" },
+      "surname": { "type": "string" }
+    }
   }
 }
