@@ -1,0 +1,42 @@
+{
+  "tags": ["auth"],
+  "description": "",
+  "summary": "Logs user into the system",
+  "parameters": [
+    {
+      "in": "body",
+      "name": "body",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "loginName": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "Successful operation. Get token",
+      "schema": {
+        "description":"message",
+        "type": "string"
+      }
+    },
+    "400": {
+      "description": "Bad queryString",
+      "schema": {
+        "description":"message",
+        "type": "string"
+      }
+    },
+    "500": {
+      "description": "Server error",
+      "schema": {
+        "description":"message",
+        "type": "string"
+      }
+    }
+  }
+}

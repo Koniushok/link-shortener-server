@@ -1,0 +1,33 @@
+{
+  "link": {
+    "type": "object",
+    "properties": {
+      "title": { "type": "string" },
+      "url": { "type": "string" },
+      "shortLink": { "type": "string" },
+      "clicks": { "type": "integer" },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "description": { "type": "string" },
+      "id": { "type": "string" }
+    }
+  },
+  "linkCreate": {
+    "type": "object",
+    "properties": {
+      "title": { "type": "string" },
+      "url": { "type": "string" },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "description": { "type": "string" }
+    }
+  }
+}

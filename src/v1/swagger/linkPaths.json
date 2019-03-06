@@ -1,0 +1,196 @@
+{
+  "definitions": {
+    "linkGetParameters": [
+      {
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "format": "int32",
+        "required": true,
+        "description": "Page number of links"
+      },
+      {
+        "in": "query",
+        "name": "items",
+        "required": true,
+        "type": "integer",
+        "format": "int32",
+        "description": "The number of items return"
+      }
+    ]
+  },
+  "allLinkGet": {
+    "tags": ["link"],
+    "description": "",
+    "summary": "Returns all links",
+    "parameters": { "$ref": "#/definitions/linkGetParameters" },
+    "responses": {
+      "200": {
+        "description": "Links array",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "linkCount": {
+              "type": "integer"
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "$ref": "schemas.json#/link"
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad queryString",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "myLinkGet": {
+    "tags": ["link"],
+    "description": "",
+    "summary": "Returns my links",
+    "security": [{ "APIKeyHeader": [] }],
+    "parameters": { "$ref": "#/definitions/linkGetParameters" },
+    "responses": {
+      "200": {
+        "description": "Links array",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "linkCount": {
+              "type": "integer"
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "$ref": "schemas.json#/link"
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Invalid token or No token",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "400": {
+        "description": "Bad queryString",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "singleLinkGet": {
+    "tags": ["link"],
+    "description": "Returns a single link",
+    "summary": "Find link by ID",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "description": "ID of link to return",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful operation",
+        "schema": {
+          "description": "message",
+          "$ref": "schemas.json#/link"
+        }
+      },
+      "404": {
+        "description": "Link not found",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "linkPut": {
+    "tags": ["link"],
+    "description": "Update an existing link",
+    "summary": "Update an existing link",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "description": "ID of link to update",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "body",
+        "name": "body",
+        "required": true,
+        "schema": {
+          "$ref": "schemas.json#/linkCreate"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful operation",
+        "schema": {
+          "$ref": "schemas.json#/link"
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "401": {
+        "description": "Invalid token or No token",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "schema": {
+          "description": "message",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Link shortener API",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/v1",
+  "securityDefinitions": {
+    "APIKeyHeader": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "token"
+    }
+  },
+  "paths": {
+    "/link": {
+      "get": {
+        "$ref": "linkPaths.json#/allLinkGet"
+      }
+    },
+    "/link/my": {
+      "get": {
+        "$ref": "linkPaths.json#/myLinkGet"
+      }
+    },
+    "/link/{id}": {
+      "get": {
+        "$ref": "linkPaths.json#/singleLinkGet"
+      },
+      "put": {
+        "$ref": "linkPaths.json#/linkPut"
+      }
+    },
+    "/auth": {
+      "post": {
+        "$ref": "authPath.json"
+      }
+    }
+  }
+}

@@ -15,7 +15,8 @@
     "start": "nodemon --exec babel-node ./src/index.js",
     "lint": "yarn eslint src/**",
     "seed": "babel-node ./src/seed.js",
-    "build": "babel src --out-dir build"
+    "build": "babel src --out-dir build",
+    "swagger": "yarn swagger-ui-watcher src/v1/swagger/swagger.json"
   },
   "description": "link shortening server",
   "license": "UNLICENSED",
@@ -41,7 +42,8 @@
     "eslint-plugin-flowtype": "^3.2.1",
     "eslint-plugin-import": "^2.16.0",
     "flow-bin": "^0.92.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "swagger-ui-watcher": "^2.1.6"
   },
   "dependencies": {
     "config": "^3.0.1",
@@ -52,6 +54,7 @@
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.9",
     "shortid": "^2.2.14",
+    "swagger-ui-express": "^4.0.2",
     "winston": "^3.2.1"
   }
 }
