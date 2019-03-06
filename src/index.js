@@ -3,13 +3,9 @@ import mongoose from 'mongoose';
 import config from 'config';
 import express from 'express';
 import cors from 'cors';
-import delay from './middleware/delay';
-import auth from './routes/auth';
-import user from './routes/user';
-import link from './routes/link';
-import redirect from './routes/redirect';
-import error from './middleware/error';
 import logger from './logger';
+import redirect from './v1/routes/redirect';
+import routeV1 from './v1/routes';
 
 const app = express();
 
@@ -21,18 +17,10 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch(() => logger.error('Could not connect to MongoDB'));
 
-app.use(delay);
-app.use(
-  cors({
-    origin: config.get('corsOrigin'),
-  }),
-);
-app.use(express.json());
-app.use('/api/auth', auth);
-app.use('/api/user', user);
-app.use('/api/link', link);
+app.use(cors());
+app.use('/api/v1', routeV1);
+app.use('/api', routeV1);
 app.use('/:shortLink', redirect);
-app.use(error);
 
 const port = process.env.PORT || config.get('port');
 app.listen(port, () => console.log(`Listening (port: ${port})`));

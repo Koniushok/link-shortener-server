@@ -1,7 +1,7 @@
 // @flow
 import express, { type $Response, type $Request } from 'express';
 import { UserModel, validateAuth } from '../models/user';
-import logger from '../logger';
+import logger from '../../logger';
 
 const router = express.Router();
 

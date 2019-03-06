@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import auth from '../middleware/auth';
 import { validateUser, UserModel } from '../models/user';
 import { LinkModel } from '../models/link';
-import logger from '../logger';
+import logger from '../../logger';
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 // @flow
 import { type $Response, type $Request, type NextFunction } from 'express';
-import logger from '../logger';
+import logger from '../../logger';
 
 function error(err: Error, req: $Request, res: $Response, next: NextFunction) {
   if (error) {

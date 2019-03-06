@@ -3,7 +3,7 @@ import express, { type $Response, type $Request } from 'express';
 import shortid from 'shortid';
 import { LinkModel, validateLink } from '../models/link';
 import auth from '../middleware/auth';
-import logger from '../logger';
+import logger from '../../logger';
 
 const router = express.Router();
 

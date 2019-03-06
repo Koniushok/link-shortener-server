@@ -4,7 +4,7 @@ import config from 'config';
 import type {
   Middleware, NextFunction, $Response, $Request,
 } from 'express';
-import logger from '../logger';
+import logger from '../../logger';
 
 const auth: Middleware = (
   req: $Request & { userId: string },
