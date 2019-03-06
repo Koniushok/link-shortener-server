@@ -17,7 +17,17 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch(() => logger.error('Could not connect to MongoDB'));
 
-app.use(cors());
+const whitelist = ['http://127.0.0.1:8000', 'http://localhost:3000'];
+const corsOptions = {
+  origin(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+app.use(cors(corsOptions));
 app.use('/api/v1', routeV1);
 app.use('/api', routeV1);
 app.use('/:shortLink', redirect);
